@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en">
+    <%- include("../components/head.ejs", { title: "Inventory Application" }) %>
+    <body>
+        <%- include("../components/header.ejs") %>
+        <main>
+            <section class="error">
+                <h1>
+                    <%= error.statusCode %>:
+                    <%= error.name %>
+                </h1>
+                <p><%= error.message %></p>
+            </section>
+        </main>
+        <%- include("../components/footer.ejs") %>
+    </body>
+</html>
