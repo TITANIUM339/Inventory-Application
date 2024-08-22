@@ -2,6 +2,8 @@ import "dotenv/config";
 import express from "express";
 import path from "node:path";
 import indexRouter from "./routes/indexRouter.js";
+import categoriesRouter from "./routes/categoriesRouter.js";
+import itemsRouter from "./routes/itemsRouter.js";
 import CustomError from "./helpers/customError.js";
 
 const PORT = process.env.PORT || 80;
@@ -17,6 +19,8 @@ app.use((req, res, next) => {
     next();
 });
 app.use("/", indexRouter);
+app.use("/categories", categoriesRouter);
+app.use("/items", itemsRouter);
 app.use((req, res, next) =>
     next(
         new CustomError(
