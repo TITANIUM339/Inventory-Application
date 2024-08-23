@@ -4,13 +4,15 @@
     <body>
         <%- include("../components/header.ejs") %>
         <main>
-            <section class="error">
-                <h1>
-                    <%= error.statusCode %>:
-                    <%= error.name %>
-                </h1>
-                <p><%= error.message %></p>
-            </section>
+            <div class="error-container">
+                <section class="error">
+                    <h1>
+                        <%= error.statusCode %>:
+                        <%= error.name %>
+                    </h1>
+                    <p><%= error.message %></p>
+                </section>
+            </div>
         </main>
         <%- include("../components/footer.ejs") %>
     </body>
