@@ -3,7 +3,20 @@
     <%- include("../components/head.ejs", { title: "Inventory Application" }) %>
     <body>
         <%- include("../components/header.ejs") %>
-        <main></main>
+        <main>
+            <div class="about-container">
+                <section class="about">
+                    <div>
+                        <h1>About</h1>
+                        <p>This is an Inventory management app for an imaginary tech store.</p>
+                    </div>
+                    <div>
+                        <a href="/categories">Explore all categories</a>
+                        <a href="/items">Explore all items</a>
+                    </div>
+                </section>
+            </div>
+        </main>
         <%- include("../components/footer.ejs") %>
     </body>
 </html>
