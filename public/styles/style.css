@@ -43,7 +43,9 @@ header {
 }
 
 nav > div > a,
-.about > :last-child > a {
+.about > :last-child > a,
+.categories-container > div > a,
+.category > :last-child > a {
     display: block;
     padding: 5px 10px 5px 10px;
     border-radius: 5px;
@@ -52,7 +54,9 @@ nav > div > a,
 }
 
 nav > div > a:hover,
-.about > :last-child > a:hover {
+.about > :last-child > a:hover,
+.categories-container > div > a:hover,
+.category > :last-child > a:hover {
     background-color: #64748b;
 }
 
@@ -85,6 +89,62 @@ nav,
     display: flex;
     justify-content: center;
     align-items: center;
+}
+
+.categories-container {
+    height: 100%;
+    display: grid;
+    grid-template-rows: 1fr min-content;
+    gap: 20px;
+}
+
+.categories-container > div {
+    justify-self: end;
+}
+
+.no-categories {
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.no-categories > h2 {
+    font-size: 1.4rem;
+}
+
+.categories > div {
+    margin-top: 20px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+}
+
+.category {
+    border: 1px solid #e5e5e5;
+    background-color: #f8fafc;
+    border-radius: 5px;
+    padding: 10px;
+    width: 250px;
+    display: grid;
+    grid-template-rows: 1fr min-content;
+    gap: 10px;
+    word-break: break-all;
+}
+
+.category > :first-child > a {
+    font-size: 1.3rem;
+    color: #18181b;
+}
+
+.category > :first-child > a:hover {
+    color: #71717a;
+}
+
+.category > :last-child {
+    justify-self: end;
+    display: flex;
+    gap: 10px;
 }
 
 footer {
