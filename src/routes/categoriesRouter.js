@@ -5,9 +5,9 @@ const router = Router();
 
 router.get("/", controller.getCategories);
 router.route("/new").get().post();
-router.get("/:category");
-router.route("/:category/edit").get().put();
-router.route("/:category/delete").get().delete();
-router.route("/:category/new").get().post();
+router.get("/:categoryId");
+router.route("/:categoryId/edit").get().put();
+router.route("/:categoryId/delete").get().delete();
+router.route("/:categoryId/new").get().post();
 
 export default router;
