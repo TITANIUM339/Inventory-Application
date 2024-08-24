@@ -147,6 +147,49 @@ nav,
     gap: 10px;
 }
 
+.new-category > div {
+    margin-top: 20px;
+    display: flex;
+    justify-content: center;
+}
+
+.new-category > div > form {
+    padding: 10px;
+    background-color: #f8fafc;
+    border: 1px solid #e5e5e5;
+    border-radius: 5px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.new-category > div > form > div {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.new-category > div > form > div > input {
+    padding: 5px;
+    border: 1px solid #e5e5e5;
+    border-radius: 5px;
+}
+
+.new-category > div > form > button {
+    width: min-content;
+    align-self: flex-end;
+    padding: 5px 20px 5px 20px;
+    background-color: #475569;
+    color: white;
+    border: none;
+    border-radius: 5px;
+}
+
+.new-category > div > form > button:hover {
+    background-color: #64748b;
+    cursor: pointer;
+}
+
 footer {
     display: flex;
     flex-wrap: wrap;
