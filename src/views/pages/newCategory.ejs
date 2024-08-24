@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+    <%- include("../components/head.ejs", { title: "New category - Inventory Application" }) %>
+    <body>
+        <%- include("../components/header.ejs") %>
+        <main>
+            <div class="categories-container">
+                <section class="new-category">
+                    <h1>New category</h1>
+                    <div>
+                        <form action="/categories/new" method="POST">
+                            <div>
+                                <label for="category-name">Name</label>
+                                <input id="category-name" type="text" name="name" placeholder="E.g., Laptops" maxlength="16" required>
+                            </div>
+                            <button type="submit">Add</button>
+                        </form>
+                    </div>
+                </section>
+            </div>
+        </main>
+        <%- include("../components/footer.ejs") %>
+    </body>
+</html>

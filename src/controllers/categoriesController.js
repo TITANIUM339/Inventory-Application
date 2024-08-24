@@ -17,5 +17,9 @@ export default {
                 ),
             );
         }
+    },
+
+    getCategoriesNew(req, res) {
+        res.render("pages/newCategory");
     }
 };
