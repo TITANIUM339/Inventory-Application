@@ -1,17 +1,17 @@
 <!DOCTYPE html>
 <html lang="en">
-    <%- include("../components/head.ejs", { title: "New category - Inventory Application" }) %>
+    <%- include("../components/head.ejs") %>
     <body>
         <%- include("../components/header.ejs") %>
         <main>
             <div class="new-categories-container">
                 <section class="new-category">
-                    <h1>New category</h1>
+                    <h1><%= heading %></h1>
                     <div>
                         <form action="/categories/new" method="POST">
                             <div>
                                 <label for="category-name">Name</label>
-                                <input id="category-name" type="text" name="name" placeholder="E.g., Laptops" maxlength="16" value="<%= errors ? errors[0].value : "" %>" required>
+                                <input id="category-name" type="text" name="name" placeholder="E.g., Laptops" maxlength="16" value="<%= input %>" required>
                             </div>
                             <% if (errors) { %>
                                 <ul class="errors">
@@ -20,7 +20,7 @@
                                     <% } %>
                                 </ul>
                             <% } %>
-                            <button type="submit">Add</button>
+                            <button type="submit"><%= button %></button>
                         </form>
                     </div>
                 </section>
