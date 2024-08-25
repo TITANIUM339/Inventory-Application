@@ -2,6 +2,7 @@ import {
     getCategories,
     addCategory,
     doesCategoryExist,
+    getCategory,
 } from "../models/queries.js";
 import customError from "../helpers/customError.js";
 import { body, validationResult, matchedData } from "express-validator";
@@ -55,7 +56,7 @@ export default {
             if (!result.isEmpty()) {
                 const errors = result.array();
 
-                res.render("pages/categoryForm", {
+                res.status(400).render("pages/categoryForm", {
                     title: "New category - Inventory Application",
                     heading: "New category",
                     input: errors[0].value,
@@ -84,4 +85,26 @@ export default {
             }
         },
     ],
+    async getCategoryEdit(req, res, next) {
+        try {
+            const { name } = await getCategory(matchedData(req).categoryId);
+
+            res.render("pages/categoryForm", {
+                title: "Edit category - Inventory Application",
+                heading: "Edit category",
+                input: name,
+                button: "Rename",
+                errors: null,
+            });
+        } catch (error) {
+            console.error(error);
+            next(
+                new customError(
+                    "Internal Server Error",
+                    "Something unexpected has occurred. Try reloading the page.",
+                    500,
+                ),
+            );
+        }
+    },
 };
