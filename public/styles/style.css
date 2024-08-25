@@ -150,7 +150,9 @@ nav,
 .new-category > div {
     margin-top: 20px;
     display: flex;
-    justify-content: center;
+    flex-direction: column;
+    gap: 20px;
+    align-items: center;
 }
 
 .new-category > div > form {
@@ -161,6 +163,7 @@ nav,
     display: flex;
     flex-direction: column;
     gap: 20px;
+    min-width: 250px;
 }
 
 .new-category > div > form > div {
@@ -188,6 +191,12 @@ nav,
 .new-category > div > form > button:hover {
     background-color: #64748b;
     cursor: pointer;
+}
+
+.errors {
+    color: red;
+    list-style: none;
+    padding: 0;
 }
 
 footer {

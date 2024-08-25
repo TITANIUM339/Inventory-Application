@@ -4,15 +4,22 @@
     <body>
         <%- include("../components/header.ejs") %>
         <main>
-            <div class="categories-container">
+            <div class="new-categories-container">
                 <section class="new-category">
                     <h1>New category</h1>
                     <div>
                         <form action="/categories/new" method="POST">
                             <div>
                                 <label for="category-name">Name</label>
-                                <input id="category-name" type="text" name="name" placeholder="E.g., Laptops" maxlength="16" required>
+                                <input id="category-name" type="text" name="name" placeholder="E.g., Laptops" maxlength="16" value="<%= errors ? errors[0].value : "" %>" required>
                             </div>
+                            <% if (errors) { %>
+                                <ul class="errors">
+                                    <% for( let i = 0; i < errors.length; i++ ) { %>
+                                        <li><%= errors[i].msg %></li>
+                                    <% } %>
+                                </ul>
+                            <% } %>
                             <button type="submit">Add</button>
                         </form>
                     </div>
