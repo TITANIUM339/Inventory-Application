@@ -30,7 +30,7 @@ router.use("/:categoryId", [
     },
 ]);
 
-router.get("/:categoryId");
+router.get("/:categoryId", controller.getCategoryItems);
 router
     .route("/:categoryId/edit")
     .get(controller.getCategoryEdit)
