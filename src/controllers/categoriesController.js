@@ -4,6 +4,7 @@ import {
     doesCategoryExist,
     getCategory,
     updateCategory,
+    getItems,
 } from "../models/queries.js";
 import customError from "../helpers/customError.js";
 import { body, validationResult, matchedData } from "express-validator";
@@ -160,4 +161,22 @@ export default {
             }
         },
     ],
+    async getCategoryItems(req, res, next) {
+        const { categoryId } = matchedData(req);
+
+        try {
+            const items = await getItems(categoryId);
+
+            res.render("pages/items", { items, categoryId });
+        } catch (error) {
+            console.error(error);
+            next(
+                new customError(
+                    "Internal Server Error",
+                    "Something unexpected has occurred. Try reloading the page.",
+                    500,
+                ),
+            );
+        }
+    }
 };
