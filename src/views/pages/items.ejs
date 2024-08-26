@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+    <%- include("../components/head.ejs", { title: "Items - Inventory Application" }) %>
+    <body>
+        <%- include("../components/header.ejs") %>
+        <main>
+            <div class="items-container">
+                <section class="items">
+                    <h1>Items</h1>
+                    <% if (items.length) { %>
+                        <div>
+                            <% for( let i = 0; i < items.length; i++ ) { %>
+                                <section class="item">
+                                    <div class="item-img">
+                                        <img src="<%= items[i].image_url %>" alt="<%= items[i].name %>" onerror="this.onerror=null; this.src='/images/image.svg';">
+                                    </div>
+                                    <div>
+                                        <div class="item-link">
+                                            <a href="/items/<%= items[i].id %>"><%= items[i].name %></a>
+                                        </div>
+                                        <div class="item-actions">
+                                            <a href="/items/<%= items[i].id %>/edit">Edit</a>
+                                            <a href="/items/<%= items[i].id %>/delete">Delete</a>
+                                        </div>
+                                    </div>
+                                </section>
+                            <% } %>
+                        </div>
+                    <% } else { %>
+                        <section class="no-items">
+                            <h2>There is nothing to see here.</h2>
+                        </section>
+                    <% } %>
+                </section>
+                <% if (categoryId) { %>
+                    <div>
+                        <a href="/categories/<%= categoryId %>/new">New item</a>
+                    </div>
+                <% } %>
+            </div>
+        </main>
+        <%- include("../components/footer.ejs") %>
+    </body>
+</html>
