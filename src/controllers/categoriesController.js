@@ -3,6 +3,7 @@ import {
     addCategory,
     doesCategoryExist,
     getCategory,
+    updateCategory,
 } from "../models/queries.js";
 import customError from "../helpers/customError.js";
 import { body, validationResult, matchedData } from "express-validator";
@@ -46,6 +47,8 @@ export default {
             input: null,
             button: "Add",
             errors: null,
+            action: "new",
+            password: false,
         });
     },
     postCategoriesNew: [
@@ -59,9 +62,11 @@ export default {
                 res.status(400).render("pages/categoryForm", {
                     title: "New category - Inventory Application",
                     heading: "New category",
-                    input: errors[0].value,
+                    input: req.body.name,
                     button: "Add",
                     errors,
+                    action: "new",
+                    password: false,
                 });
 
                 return;
@@ -87,7 +92,8 @@ export default {
     ],
     async getCategoryEdit(req, res, next) {
         try {
-            const { name } = await getCategory(matchedData(req).categoryId);
+            const { categoryId } = matchedData(req);
+            const { name } = await getCategory(categoryId);
 
             res.render("pages/categoryForm", {
                 title: "Edit category - Inventory Application",
@@ -95,6 +101,8 @@ export default {
                 input: name,
                 button: "Rename",
                 errors: null,
+                action: `${categoryId}/edit`,
+                password: true,
             });
         } catch (error) {
             console.error(error);
@@ -107,4 +115,49 @@ export default {
             );
         }
     },
+    postCategoryEdit: [
+        categoryNameValidationChain(),
+        body("password")
+            .notEmpty()
+            .withMessage("Password must not be empty")
+            .equals(process.env.ADMIN_PASSWORD)
+            .withMessage("Wrong password"),
+        async (req, res, next) => {
+            const { categoryId } = matchedData(req);
+            const result = validationResult(req);
+
+            if (!result.isEmpty()) {
+                const errors = result.array();
+
+                res.status(400).render("pages/categoryForm", {
+                    title: "Edit category - Inventory Application",
+                    heading: "Edit category",
+                    input: req.body.name,
+                    button: "Rename",
+                    errors,
+                    action: `${categoryId}/edit`,
+                    password: true,
+                });
+
+                return;
+            }
+
+            try {
+                const { name } = matchedData(req);
+
+                await updateCategory(categoryId, name);
+
+                res.redirect("/categories");
+            } catch (error) {
+                console.error(error);
+                next(
+                    new customError(
+                        "Internal Server Error",
+                        "Something unexpected has occurred. Try reloading the page.",
+                        500,
+                    ),
+                );
+            }
+        },
+    ],
 };
