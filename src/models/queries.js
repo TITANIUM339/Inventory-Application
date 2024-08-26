@@ -34,10 +34,17 @@ async function updateCategory(id, newName) {
     ]);
 }
 
+async function getItems(categoryId) {
+    const { rows } = await pool.query("SELECT * FROM items WHERE category_id = $1", [categoryId]);
+
+    return rows;
+}
+
 export {
     getCategories,
     addCategory,
     doesCategoryExist,
     getCategory,
     updateCategory,
+    getItems,
 };
