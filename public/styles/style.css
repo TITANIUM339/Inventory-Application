@@ -45,7 +45,9 @@ header {
 nav > div > a,
 .about > :last-child > a,
 .categories-container > div > a,
-.category > :last-child > a {
+.category > :last-child > a,
+.item-actions > a,
+.items-container > div > a {
     display: block;
     padding: 5px 10px 5px 10px;
     border-radius: 5px;
@@ -56,7 +58,9 @@ nav > div > a,
 nav > div > a:hover,
 .about > :last-child > a:hover,
 .categories-container > div > a:hover,
-.category > :last-child > a:hover {
+.category > :last-child > a:hover,
+.item-actions > a:hover,
+.items-container > div > a:hover {
     background-color: #64748b;
 }
 
@@ -91,36 +95,36 @@ nav,
     align-items: center;
 }
 
-.categories-container {
+.categories-container, .items-container {
     height: 100%;
     display: grid;
     grid-template-rows: 1fr min-content;
     gap: 20px;
 }
 
-.categories-container > div {
+.categories-container > div, .items-container > div {
     justify-self: end;
 }
 
-.no-categories {
+.no-categories, .no-items {
     height: 100%;
     display: flex;
     justify-content: center;
     align-items: center;
 }
 
-.no-categories > h2 {
+.no-categories > h2, .no-items > h2 {
     font-size: 1.4rem;
 }
 
-.categories > div {
+.categories > div, .items > div {
     margin-top: 20px;
     display: flex;
     flex-wrap: wrap;
     gap: 20px;
 }
 
-.category {
+.category, .item {
     border: 1px solid #e5e5e5;
     background-color: #f8fafc;
     border-radius: 5px;
@@ -132,12 +136,12 @@ nav,
     word-break: break-all;
 }
 
-.category > :first-child > a {
+.category > :first-child > a, .item-link > a {
     font-size: 1.3rem;
     color: #18181b;
 }
 
-.category > :first-child > a:hover {
+.category > :first-child > a:hover, .item-link > a:hover {
     color: #71717a;
 }
 
@@ -197,6 +201,19 @@ nav,
     color: red;
     list-style: none;
     padding: 0;
+}
+
+.item-img > img {
+    width: 100%;
+    aspect-ratio: 1 / 1;
+    object-fit: contain;
+}
+
+.item-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+    margin-top: 20px;
 }
 
 footer {
