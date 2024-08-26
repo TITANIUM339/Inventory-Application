@@ -13,8 +13,8 @@ router
 
 router.use("/:categoryId", [
     param("categoryId")
-        .toInt()
         .isInt({ min: 1 })
+        .toInt()
         .custom(async (value) => {
             if (!(await doesCategoryExist(value))) {
                 throw new Error();
@@ -31,7 +31,10 @@ router.use("/:categoryId", [
 ]);
 
 router.get("/:categoryId");
-router.route("/:categoryId/edit").get(controller.getCategoryEdit).post();
+router
+    .route("/:categoryId/edit")
+    .get(controller.getCategoryEdit)
+    .post(controller.postCategoryEdit);
 router.route("/:categoryId/delete").get().post();
 router.route("/:categoryId/new").get().post();
 
