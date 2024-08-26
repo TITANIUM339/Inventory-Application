@@ -8,11 +8,17 @@
                 <section class="new-category">
                     <h1><%= heading %></h1>
                     <div>
-                        <form action="/categories/new" method="POST">
+                        <form action="/categories/<%= action %>" method="POST">
                             <div>
                                 <label for="category-name">Name</label>
                                 <input id="category-name" type="text" name="name" placeholder="E.g., Laptops" maxlength="16" value="<%= input %>" required>
                             </div>
+                            <% if (password) { %>
+                                 <div>
+                                    <label for="category-password">Admin password</label>
+                                    <input id="category-password" type="password" name="password" required>
+                                </div>
+                            <% } %>
                             <% if (errors) { %>
                                 <ul class="errors">
                                     <% for( let i = 0; i < errors.length; i++ ) { %>
