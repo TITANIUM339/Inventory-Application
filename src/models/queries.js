@@ -27,4 +27,17 @@ async function getCategory(id) {
     return rows[0];
 }
 
-export { getCategories, addCategory, doesCategoryExist, getCategory };
+async function updateCategory(id, newName) {
+    await pool.query("UPDATE categories SET name = $1 WHERE id = $2", [
+        newName,
+        id,
+    ]);
+}
+
+export {
+    getCategories,
+    addCategory,
+    doesCategoryExist,
+    getCategory,
+    updateCategory,
+};
