@@ -168,7 +168,12 @@ export default {
             const items = await getItems(categoryId);
             const { name: heading } = await getCategory(categoryId);
 
-            res.render("pages/items", { items, categoryId, heading, title: `${heading} - Inventory Application` });
+            res.render("pages/items", {
+                items,
+                categoryId,
+                heading,
+                title: `${heading} - Inventory Application`,
+            });
         } catch (error) {
             console.error(error);
             next(
@@ -179,5 +184,35 @@ export default {
                 ),
             );
         }
-    }
+    },
+    async getCategoryItemsNew(req, res, next) {
+        const { categoryId } = matchedData(req);
+
+        try {
+            const { name } = await getCategory(categoryId);
+
+            res.render("pages/itemForm", {
+                title: "New item - Inventory Application",
+                heading: `New item in ${name}`,
+                action: `${categoryId}/new`,
+                name: null,
+                description: null,
+                price: null,
+                stock: null,
+                url: null,
+                password: false,
+                errors: null,
+                button: "Add",
+            });
+        } catch (error) {
+            console.error(error);
+            next(
+                new customError(
+                    "Internal Server Error",
+                    "Something unexpected has occurred. Try reloading the page.",
+                    500,
+                ),
+            );
+        }
+    },
 };
