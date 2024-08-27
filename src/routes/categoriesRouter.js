@@ -36,6 +36,6 @@ router
     .get(controller.getCategoryEdit)
     .post(controller.postCategoryEdit);
 router.route("/:categoryId/delete").get().post();
-router.route("/:categoryId/new").get().post();
+router.route("/:categoryId/new").get(controller.getCategoryItemsNew).post();
 
 export default router;
