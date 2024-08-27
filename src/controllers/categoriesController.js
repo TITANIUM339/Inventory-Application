@@ -166,8 +166,9 @@ export default {
 
         try {
             const items = await getItems(categoryId);
+            const { name: heading } = await getCategory(categoryId);
 
-            res.render("pages/items", { items, categoryId });
+            res.render("pages/items", { items, categoryId, heading, title: `${heading} - Inventory Application` });
         } catch (error) {
             console.error(error);
             next(

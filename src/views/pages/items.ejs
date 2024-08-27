@@ -1,12 +1,12 @@
 <!DOCTYPE html>
 <html lang="en">
-    <%- include("../components/head.ejs", { title: "Items - Inventory Application" }) %>
+    <%- include("../components/head.ejs") %>
     <body>
         <%- include("../components/header.ejs") %>
         <main>
             <div class="items-container">
                 <section class="items">
-                    <h1>Items</h1>
+                    <h1><%= heading %></h1>
                     <% if (items.length) { %>
                         <div>
                             <% for( let i = 0; i < items.length; i++ ) { %>
