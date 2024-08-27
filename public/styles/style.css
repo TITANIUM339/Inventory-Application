@@ -95,36 +95,42 @@ nav,
     align-items: center;
 }
 
-.categories-container, .items-container {
+.categories-container,
+.items-container {
     height: 100%;
     display: grid;
     grid-template-rows: 1fr min-content;
     gap: 20px;
 }
 
-.categories-container > div, .items-container > div {
+.categories-container > div,
+.items-container > div {
     justify-self: end;
 }
 
-.no-categories, .no-items {
+.no-categories,
+.no-items {
     height: 100%;
     display: flex;
     justify-content: center;
     align-items: center;
 }
 
-.no-categories > h2, .no-items > h2 {
+.no-categories > h2,
+.no-items > h2 {
     font-size: 1.4rem;
 }
 
-.categories > div, .items > div {
+.categories > div,
+.items > div {
     margin-top: 20px;
     display: flex;
     flex-wrap: wrap;
     gap: 20px;
 }
 
-.category, .item {
+.category,
+.item {
     border: 1px solid #e5e5e5;
     background-color: #f8fafc;
     border-radius: 5px;
@@ -136,12 +142,14 @@ nav,
     word-break: break-all;
 }
 
-.category > :first-child > a, .item-link > a {
+.category > :first-child > a,
+.item-link > a {
     font-size: 1.3rem;
     color: #18181b;
 }
 
-.category > :first-child > a:hover, .item-link > a:hover {
+.category > :first-child > a:hover,
+.item-link > a:hover {
     color: #71717a;
 }
 
@@ -151,7 +159,8 @@ nav,
     gap: 10px;
 }
 
-.new-category > div {
+.new-category > div,
+.new-item > div {
     margin-top: 20px;
     display: flex;
     flex-direction: column;
@@ -159,7 +168,8 @@ nav,
     align-items: center;
 }
 
-.new-category > div > form {
+.new-category > div > form,
+.new-item > div > form {
     padding: 10px;
     background-color: #f8fafc;
     border: 1px solid #e5e5e5;
@@ -170,19 +180,23 @@ nav,
     min-width: 250px;
 }
 
-.new-category > div > form > div {
+.new-category > div > form > div,
+.new-item > div > form > div {
     display: flex;
     flex-direction: column;
     gap: 5px;
 }
 
-.new-category > div > form > div > input {
+.new-category > div > form > div > input,
+.new-item > div > form > div > input,
+.new-item > div > form > div > textarea {
     padding: 5px;
     border: 1px solid #e5e5e5;
     border-radius: 5px;
 }
 
-.new-category > div > form > button {
+.new-category > div > form > button,
+.new-item > div > form > button {
     width: min-content;
     align-self: flex-end;
     padding: 5px 20px 5px 20px;
@@ -192,7 +206,8 @@ nav,
     border-radius: 5px;
 }
 
-.new-category > div > form > button:hover {
+.new-category > div > form > button:hover,
+.new-item > div > form > button:hover {
     background-color: #64748b;
     cursor: pointer;
 }
