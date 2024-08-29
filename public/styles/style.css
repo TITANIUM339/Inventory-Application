@@ -160,7 +160,8 @@ nav,
 }
 
 .new-category > div,
-.new-item > div {
+.new-item > div,
+.delete > div {
     margin-top: 20px;
     display: flex;
     flex-direction: column;
@@ -169,7 +170,8 @@ nav,
 }
 
 .new-category > div > form,
-.new-item > div > form {
+.new-item > div > form,
+.delete > div > form {
     padding: 10px;
     background-color: #f8fafc;
     border: 1px solid #e5e5e5;
@@ -181,7 +183,8 @@ nav,
 }
 
 .new-category > div > form > div,
-.new-item > div > form > div {
+.new-item > div > form > div,
+.delete > div > form > div {
     display: flex;
     flex-direction: column;
     gap: 5px;
@@ -189,14 +192,16 @@ nav,
 
 .new-category > div > form > div > input,
 .new-item > div > form > div > input,
-.new-item > div > form > div > textarea {
+.new-item > div > form > div > textarea,
+.delete > div > form > div > input {
     padding: 5px;
     border: 1px solid #e5e5e5;
     border-radius: 5px;
 }
 
 .new-category > div > form > button,
-.new-item > div > form > button {
+.new-item > div > form > button,
+.delete > div > form > button {
     width: min-content;
     align-self: flex-end;
     padding: 5px 20px 5px 20px;
@@ -207,7 +212,8 @@ nav,
 }
 
 .new-category > div > form > button:hover,
-.new-item > div > form > button:hover {
+.new-item > div > form > button:hover,
+.delete > div > form > button:hover {
     background-color: #64748b;
     cursor: pointer;
 }
