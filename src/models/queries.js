@@ -35,9 +35,27 @@ async function updateCategory(id, newName) {
 }
 
 async function getItems(categoryId) {
-    const { rows } = await pool.query("SELECT * FROM items WHERE category_id = $1", [categoryId]);
+    const { rows } = await pool.query(
+        "SELECT * FROM items WHERE category_id = $1",
+        [categoryId],
+    );
 
     return rows;
+}
+
+async function addItem(name, description, price, stock, url, categoryId) {
+    await pool.query(
+        "INSERT INTO items (name, description, price, stock, image_url, category_id) VALUES ($1, $2, $3, $4, $5, $6)",
+        [name, description, price, stock, url, categoryId],
+    );
+}
+
+async function doesItemExist(value) {
+    const query = `SELECT CASE WHEN COUNT(*) > 0 THEN TRUE ELSE FALSE END AS exists FROM items WHERE ${Number.isInteger(value) ? "id " : "name"} = $1`;
+
+    const { rows } = await pool.query(query, [value]);
+
+    return rows[0].exists;
 }
 
 export {
@@ -47,4 +65,6 @@ export {
     getCategory,
     updateCategory,
     getItems,
+    addItem,
+    doesItemExist,
 };
