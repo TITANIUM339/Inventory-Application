@@ -15,19 +15,19 @@
                             </div>
                             <div>
                                 <label for="item-description">Description</label>
-                                <textarea name="description" id="item-description" placeholder="E.g., 8-Core CPU 10-Core GPU 16GB Unified Memory 1TB SSD Storage" maxlength="256" value="<%= description %>" required></textarea>
+                                <textarea name="description" id="item-description" placeholder="E.g., 8-Core CPU 10-Core GPU 16GB Unified Memory 1TB SSD Storage" maxlength="256" required><%= description %></textarea>
                             </div>
                             <div>
                                 <label for="item-price">Price</label>
-                                <input type="number" name="price" id="item-price" min="0" value="<%= price %>" required>
+                                <input type="number" name="price" id="item-price" min="0" max="100000" step="0.01" placeholder="$" value="<%= price %>" required>
                             </div>
                             <div>
                                 <label for="item-stock">Stock</label>
-                                <input type="number" name="stock" id="item-stock" min="0" value="<%= stock %>" required>
+                                <input type="number" name="stock" id="item-stock" min="0" max="1000" value="<%= stock %>" required>
                             </div>
                             <div>
                                 <label for="item-url">Image URL</label>
-                                <input type="text" name="url" id="item-url" maxlength="128" value="<%= url %>" required>
+                                <input type="text" name="url" id="item-url" maxlength="128" value="<%= url %>">
                             </div>
                             <% if (password) { %>
                                  <div>
