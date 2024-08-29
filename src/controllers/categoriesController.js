@@ -278,8 +278,9 @@ export default {
 
                     return;
                 }
-                
-                const { name, description, price, stock, url } = matchedData(req);
+
+                const { name, description, price, stock, url } =
+                    matchedData(req);
 
                 await addItem(name, description, price, stock, url, categoryId);
 
@@ -294,6 +295,29 @@ export default {
                     ),
                 );
             }
-        }
+        },
     ],
+    async getCategoryDelete(req, res, next) {
+        const { categoryId } = matchedData(req);
+
+        try {
+            const { name } = await getCategory(categoryId);
+
+            res.render("pages/delete", {
+                title: "Delete category - Inventory Application",
+                heading: `Delete ${name}`,
+                action: `categories/${categoryId}/delete`,
+                errors: null,
+            });
+        } catch (error) {
+            console.error(error);
+            next(
+                new customError(
+                    "Internal Server Error",
+                    "Something unexpected has occurred. Try reloading the page.",
+                    500,
+                ),
+            );
+        }
+    },
 };
