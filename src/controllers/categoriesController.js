@@ -5,23 +5,59 @@ import {
     getCategory,
     updateCategory,
     getItems,
+    doesItemExist,
+    addItem,
 } from "../models/queries.js";
 import customError from "../helpers/customError.js";
 import { body, validationResult, matchedData } from "express-validator";
 
-function categoryNameValidationChain() {
-    return body("name")
+function stringValidationChain(field, max) {
+    const upper = field.charAt(0).toUpperCase() + field.slice(1);
+
+    return body(field)
         .trim()
         .customSanitizer((value) => value.replaceAll(/\s+/g, " "))
         .notEmpty()
-        .withMessage("Name must not be empty")
-        .isLength({ max: 16 })
-        .withMessage("Name length must be within 16 characters")
-        .custom(async (value) => {
-            if (await doesCategoryExist(value)) {
-                throw new Error("Category name already exists");
+        .withMessage(`${upper} must not be empty`)
+        .isLength({ max })
+        .withMessage(`${upper} length must be within ${max} characters`);
+}
+
+function categoryNameValidationChain() {
+    return stringValidationChain("name", 16).custom(async (value) => {
+        if (await doesCategoryExist(value)) {
+            throw new Error("Category name already exists");
+        }
+    });
+}
+
+function itemValidationChain() {
+    return [
+        stringValidationChain("name", 32).custom(async (value) => {
+            if (await doesItemExist(value)) {
+                throw new Error("Item name already exists");
             }
-        });
+        }),
+        stringValidationChain("description", 256),
+        body("price")
+            .notEmpty()
+            .withMessage("Price must not be empty")
+            .isFloat({ min: 0, max: 100_000 })
+            .withMessage("Price must be between 0 and 100000")
+            .toFloat(),
+        body("stock")
+            .notEmpty()
+            .withMessage("Stock must not be empty")
+            .isInt({ min: 0, max: 1_000 })
+            .withMessage("Stock must be between 0 and 1000")
+            .toInt(),
+        body("url", "Invalid URL")
+            .optional({ checkFalsy: true })
+            .trim()
+            .isURL()
+            .isLength({ max: 128 })
+            .withMessage("URL length must be within 128 characters"),
+    ];
 }
 
 export default {
@@ -215,4 +251,49 @@ export default {
             );
         }
     },
+    postCategoryItemsNew: [
+        itemValidationChain(),
+        async (req, res, next) => {
+            const { categoryId } = matchedData(req);
+            const result = validationResult(req);
+
+            try {
+                if (!result.isEmpty()) {
+                    const errors = result.array();
+                    const { name } = await getCategory(categoryId);
+
+                    res.status(400).render("pages/itemForm", {
+                        title: "New item - Inventory Application",
+                        heading: `New item in ${name}`,
+                        action: `${categoryId}/new`,
+                        name: req.body.name,
+                        description: req.body.description,
+                        price: req.body.price,
+                        stock: req.body.stock,
+                        url: req.body.url,
+                        password: false,
+                        errors: errors,
+                        button: "Add",
+                    });
+
+                    return;
+                }
+                
+                const { name, description, price, stock, url } = matchedData(req);
+
+                await addItem(name, description, price, stock, url, categoryId);
+
+                res.redirect(`/categories/${categoryId}`);
+            } catch (error) {
+                console.error(error);
+                next(
+                    new customError(
+                        "Internal Server Error",
+                        "Something unexpected has occurred. Try reloading the page.",
+                        500,
+                    ),
+                );
+            }
+        }
+    ],
 };
