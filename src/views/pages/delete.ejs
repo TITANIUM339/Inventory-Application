@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+    <%- include("../components/head.ejs") %>
+    <body>
+        <%- include("../components/header.ejs") %>
+        <main>
+            <div class="delete-container">
+                <section class="delete">
+                    <h1><%= heading %></h1>
+                    <div>
+                        <form action="/<%= action %>" method="POST">
+                            <div>
+                                <label for="delete-password">Admin password</label>
+                                <input id="delete-password" type="password" name="password" required>
+                            </div>
+                            <% if (errors) { %>
+                                <ul class="errors">
+                                    <% for( let i = 0; i < errors.length; i++ ) { %>
+                                        <li><%= errors[i].msg %></li>
+                                    <% } %>
+                                </ul>
+                            <% } %>
+                            <button type="submit">Confirm</button>
+                        </form>
+                    </div>
+                </section>
+            </div>
+        </main>
+        <%- include("../components/footer.ejs") %>
+    </body>
+</html>
