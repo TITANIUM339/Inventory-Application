@@ -7,6 +7,7 @@ import {
     getItems,
     doesItemExist,
     addItem,
+    deleteCategory,
 } from "../models/queries.js";
 import customError from "../helpers/customError.js";
 import { body, validationResult, matchedData } from "express-validator";
@@ -33,8 +34,10 @@ function categoryNameValidationChain() {
 
 function itemValidationChain() {
     return [
-        stringValidationChain("name", 32).custom(async (value) => {
-            if (await doesItemExist(value)) {
+        stringValidationChain("name", 32).custom(async (value, { req }) => {
+            const { categoryId } = matchedData(req);
+            
+            if (await doesItemExist(value, categoryId)) {
                 throw new Error("Item name already exists");
             }
         }),
@@ -58,6 +61,14 @@ function itemValidationChain() {
             .isLength({ max: 128 })
             .withMessage("URL length must be within 128 characters"),
     ];
+}
+
+function passwordValidationChian() {
+    return body("password")
+        .notEmpty()
+        .withMessage("Password must not be empty")
+        .equals(process.env.ADMIN_PASSWORD)
+        .withMessage("Wrong password");
 }
 
 export default {
@@ -154,11 +165,7 @@ export default {
     },
     postCategoryEdit: [
         categoryNameValidationChain(),
-        body("password")
-            .notEmpty()
-            .withMessage("Password must not be empty")
-            .equals(process.env.ADMIN_PASSWORD)
-            .withMessage("Wrong password"),
+        passwordValidationChian(),
         async (req, res, next) => {
             const { categoryId } = matchedData(req);
             const result = validationResult(req);
@@ -320,4 +327,41 @@ export default {
             );
         }
     },
+    postCategoryDelete: [
+        passwordValidationChian(),
+        async (req, res, next) => {
+            const { categoryId } = matchedData(req);
+            const result = validationResult(req);
+
+            try {
+                const { name } = await getCategory(categoryId);
+
+                if (!result.isEmpty()) {
+                    const errors = result.array();
+
+                    res.status(400).render("pages/delete", {
+                        title: "Delete category - Inventory Application",
+                        heading: `Delete ${name}`,
+                        action: `categories/${categoryId}/delete`,
+                        errors: errors,
+                    });
+
+                    return;
+                }
+
+                await deleteCategory(categoryId);
+
+                res.redirect("/categories");
+            } catch (error) {
+                console.error(error);
+                next(
+                    new customError(
+                        "Internal Server Error",
+                        "Something unexpected has occurred. Try reloading the page.",
+                        500,
+                    ),
+                );
+            }
+        },
+    ],
 };
