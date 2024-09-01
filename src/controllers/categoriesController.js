@@ -36,7 +36,7 @@ function itemValidationChain() {
     return [
         stringValidationChain("name", 32).custom(async (value, { req }) => {
             const { categoryId } = matchedData(req);
-            
+
             if (await doesItemExist(value, categoryId)) {
                 throw new Error("Item name already exists");
             }

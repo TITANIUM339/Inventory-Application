@@ -35,7 +35,10 @@ router
     .route("/:categoryId/edit")
     .get(controller.getCategoryEdit)
     .post(controller.postCategoryEdit);
-router.route("/:categoryId/delete").get(controller.getCategoryDelete).post();
+router
+    .route("/:categoryId/delete")
+    .get(controller.getCategoryDelete)
+    .post(controller.postCategoryDelete);
 router
     .route("/:categoryId/new")
     .get(controller.getCategoryItemsNew)
