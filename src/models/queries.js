@@ -50,12 +50,17 @@ async function addItem(name, description, price, stock, url, categoryId) {
     );
 }
 
-async function doesItemExist(value) {
-    const query = `SELECT CASE WHEN COUNT(*) > 0 THEN TRUE ELSE FALSE END AS exists FROM items WHERE ${Number.isInteger(value) ? "id " : "name"} = $1`;
+async function doesItemExist(value, categoryId) {
+    const query = `SELECT CASE WHEN COUNT(*) > 0 THEN TRUE ELSE FALSE END AS exists FROM items WHERE ${Number.isInteger(value) ? "id " : "name"} = $1 AND category_id = $2`;
 
-    const { rows } = await pool.query(query, [value]);
+    const { rows } = await pool.query(query, [value, categoryId]);
 
     return rows[0].exists;
+}
+
+async function deleteCategory(categoryId) {
+    await pool.query("DELETE FROM items WHERE category_id = $1", [categoryId]);
+    await pool.query("DELETE FROM categories WHERE id = $1", [categoryId]);
 }
 
 export {
@@ -67,4 +72,5 @@ export {
     getItems,
     addItem,
     doesItemExist,
+    deleteCategory,
 };
