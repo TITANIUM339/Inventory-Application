@@ -35,10 +35,12 @@ async function updateCategory(id, newName) {
 }
 
 async function getItems(categoryId) {
-    const { rows } = await pool.query(
-        "SELECT * FROM items WHERE category_id = $1",
-        [categoryId],
-    );
+    const query1 = "SELECT * FROM items WHERE category_id = $1";
+    const query2 = "SELECT * FROM items";
+
+    const { rows } = categoryId
+        ? await pool.query(query1, [categoryId])
+        : await pool.query(query2);
 
     return rows;
 }
