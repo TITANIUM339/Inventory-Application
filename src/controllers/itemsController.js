@@ -1,5 +1,6 @@
-import { getItems } from "../models/queries.js";
+import { getCategory, getItems, getItem as gi } from "../models/queries.js";
 import customError from "../helpers/customError.js";
+import { matchedData } from "express-validator";
 
 export default {
     async getItems(req, res, next) {
@@ -12,6 +13,25 @@ export default {
                 items,
                 categoryId: null,
             });
+        } catch (error) {
+            console.error(error);
+            next(
+                new customError(
+                    "Internal Server Error",
+                    "Something unexpected has occurred. Try reloading the page.",
+                    500,
+                ),
+            );
+        }
+    },
+    async getItem(req, res, next) {
+        const { itemId } = matchedData(req);
+
+        try {
+            const item = await gi(itemId);
+            const { name: category } = await getCategory(item.category_id);
+
+            res.render("pages/item", { item, category });
         } catch (error) {
             console.error(error);
             next(
