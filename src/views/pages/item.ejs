@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+    <%- include("../components/head.ejs", { title: `${item.name} - Inventory Application` }) %>
+    <body>
+        <%- include("../components/header.ejs") %>
+        <main>
+            <div class="item-container">
+                <div class="img">
+                    <img src="<%= item.image_url %>" alt="<%= item.name %>" onerror="this.onerror=null; this.src='/images/image.svg';">
+                </div>
+                <div class="details">
+                    <section>
+                        <h1><%= item.name %></h1>
+                        <p><%= item.description %></p>
+                    </section>
+                    <ul>
+                        <li>Price: $<%= item.price.toFixed(2) %></li>
+                        <li>Stock: <%= item.stock %></li>
+                        <li>Category: <%= category %></li>
+                    </ul>
+                </div>
+            </div>
+        </main>
+        <%- include("../components/footer.ejs") %>
+    </body>
+</html>
