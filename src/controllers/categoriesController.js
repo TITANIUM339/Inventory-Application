@@ -237,7 +237,7 @@ export default {
             res.render("pages/itemForm", {
                 title: "New item - Inventory Application",
                 heading: `New item in ${name}`,
-                action: `${categoryId}/new`,
+                action: `categories/${categoryId}/new`,
                 name: null,
                 description: null,
                 price: null,
@@ -272,14 +272,14 @@ export default {
                     res.status(400).render("pages/itemForm", {
                         title: "New item - Inventory Application",
                         heading: `New item in ${name}`,
-                        action: `${categoryId}/new`,
+                        action: `categories/${categoryId}/new`,
                         name: req.body.name,
                         description: req.body.description,
                         price: req.body.price,
                         stock: req.body.stock,
                         url: req.body.url,
                         password: false,
-                        errors: errors,
+                        errors,
                         button: "Add",
                     });
 
