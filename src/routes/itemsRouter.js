@@ -27,7 +27,7 @@ router.use("/:itemId", [
 ]);
 
 router.get("/:itemId", controller.getItem);
-router.route("/:itemId/update").get().put();
-router.route("/:itemId/delete").get().delete();
+router.route("/:itemId/edit").get(controller.getItemEdit).post();
+router.route("/:itemId/delete").get().post();
 
 export default router;
