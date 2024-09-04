@@ -27,7 +27,10 @@ router.use("/:itemId", [
 ]);
 
 router.get("/:itemId", controller.getItem);
-router.route("/:itemId/edit").get(controller.getItemEdit).post();
+router
+    .route("/:itemId/edit")
+    .get(controller.getItemEdit)
+    .post(controller.postItemEdit);
 router.route("/:itemId/delete").get().post();
 
 export default router;
