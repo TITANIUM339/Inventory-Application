@@ -43,4 +43,40 @@ export default {
             );
         }
     },
+    async getItemEdit(req, res, next) {
+        const { itemId } = matchedData(req);
+
+        try {
+            const {
+                name,
+                description,
+                price,
+                stock,
+                image_url: url,
+            } = await gi(itemId);
+
+            res.render("pages/itemForm", {
+                title: "Edit item - Inventory Application",
+                heading: "Edit item",
+                action: `items/${itemId}/edit`,
+                name,
+                description,
+                price,
+                stock,
+                url,
+                password: true,
+                errors: null,
+                button: "Update",
+            });
+        } catch (error) {
+            console.error(error);
+            next(
+                new customError(
+                    "Internal Server Error",
+                    "Something unexpected has occurred. Try reloading the page.",
+                    500,
+                ),
+            );
+        }
+    },
 };
