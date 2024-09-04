@@ -1,4 +1,10 @@
-import { getCategory, getItem, getItems, getItem as gi, updateItem } from "../models/queries.js";
+import {
+    getCategory,
+    getItem,
+    getItems,
+    getItem as gi,
+    updateItem,
+} from "../models/queries.js";
 import customError from "../helpers/customError.js";
 import { matchedData, validationResult } from "express-validator";
 import {

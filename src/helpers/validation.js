@@ -23,11 +23,22 @@ function categoryNameValidationChain() {
 
 function itemValidationChain() {
     return [
-        stringValidationChain("name", 32).custom(async (value, { req: { res: { locals: { categoryId } } } }) => {  
-            if (await doesItemExist(value, categoryId)) {
-                throw new Error("Item name already exists");
-            }
-        }),
+        stringValidationChain("name", 32).custom(
+            async (
+                value,
+                {
+                    req: {
+                        res: {
+                            locals: { categoryId },
+                        },
+                    },
+                },
+            ) => {
+                if (await doesItemExist(value, categoryId)) {
+                    throw new Error("Item name already exists");
+                }
+            },
+        ),
         stringValidationChain("description", 256),
         body("price")
             .notEmpty()
