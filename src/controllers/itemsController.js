@@ -1,6 +1,10 @@
-import { getCategory, getItems, getItem as gi } from "../models/queries.js";
+import { getCategory, getItem, getItems, getItem as gi, updateItem } from "../models/queries.js";
 import customError from "../helpers/customError.js";
-import { matchedData } from "express-validator";
+import { matchedData, validationResult } from "express-validator";
+import {
+    itemValidationChain,
+    passwordValidationChian,
+} from "../helpers/validation.js";
 
 export default {
     async getItems(req, res, next) {
@@ -79,4 +83,58 @@ export default {
             );
         }
     },
+    postItemEdit: [
+        async (req, res, next) => {
+            const { itemId } = matchedData(req);
+            const { category_id } = await getItem(itemId);
+
+            res.locals.categoryId = category_id;
+
+            next();
+        },
+        itemValidationChain(),
+        passwordValidationChian(),
+        async (req, res, next) => {
+            const { itemId } = matchedData(req);
+            const result = validationResult(req);
+
+            if (!result.isEmpty()) {
+                const errors = result.array();
+
+                res.render("pages/itemForm", {
+                    title: "Edit item - Inventory Application",
+                    heading: "Edit item",
+                    action: `items/${itemId}/edit`,
+                    name: req.body.name,
+                    description: req.body.description,
+                    price: req.body.price,
+                    stock: req.body.stock,
+                    url: req.body.url,
+                    password: true,
+                    errors,
+                    button: "Update",
+                });
+
+                return;
+            }
+
+            try {
+                const { name, description, price, stock, url } =
+                    matchedData(req);
+
+                await updateItem(itemId, name, description, price, stock, url);
+
+                res.redirect(`/categories/${res.locals.categoryId}`);
+            } catch (error) {
+                console.error(error);
+                next(
+                    new customError(
+                        "Internal Server Error",
+                        "Something unexpected has occurred. Try reloading the page.",
+                        500,
+                    ),
+                );
+            }
+        },
+    ],
 };
