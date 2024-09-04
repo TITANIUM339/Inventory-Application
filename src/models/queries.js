@@ -76,6 +76,13 @@ async function getItem(id) {
     return rows[0];
 }
 
+async function updateItem(id, name, description, price, stock, url) {
+    await pool.query(
+        "UPDATE items SET name = $1, description = $2, price = $3, stock = $4, image_url = $5 WHERE id = $6",
+        [name, description, price, stock, url, id],
+    );
+}
+
 export {
     getCategories,
     addCategory,
@@ -87,4 +94,5 @@ export {
     doesItemExist,
     deleteCategory,
     getItem,
+    updateItem,
 };
