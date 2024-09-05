@@ -83,6 +83,10 @@ async function updateItem(id, name, description, price, stock, url) {
     );
 }
 
+async function deleteItem(itemId) {
+    await pool.query("DELETE FROM items WHERE id = $1", [itemId]);
+}
+
 export {
     getCategories,
     addCategory,
@@ -95,4 +99,5 @@ export {
     deleteCategory,
     getItem,
     updateItem,
+    deleteItem,
 };
