@@ -143,4 +143,27 @@ export default {
             }
         },
     ],
+    async getItemDelete(req, res, next) {
+        const { itemId } = matchedData(req);
+
+        try {
+            const { name } = await gi(itemId);
+
+            res.render("pages/delete", {
+                title: "Delete item - Inventory Application",
+                heading: `Delete ${name}`,
+                action: `items/${itemId}/delete`,
+                errors: null,
+            });   
+        } catch (error) {
+            console.error(error);
+            next(
+                new customError(
+                    "Internal Server Error",
+                    "Something unexpected has occurred. Try reloading the page.",
+                    500,
+                ),
+            );
+        }
+    },
 };
