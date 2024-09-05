@@ -10,7 +10,8 @@
         "watch": "node --watch ./src/app.js",
         "lint": "eslint .",
         "format": "prettier . --write",
-        "checkFormat": "prettier . --check"
+        "checkFormat": "prettier . --check",
+        "populateDB": "node ./src/models/populateDB.js"
     },
     "repository": {
         "type": "git",
