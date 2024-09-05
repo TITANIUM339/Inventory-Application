@@ -31,6 +31,9 @@ router
     .route("/:itemId/edit")
     .get(controller.getItemEdit)
     .post(controller.postItemEdit);
-router.route("/:itemId/delete").get(controller.getItemDelete).post();
+router
+    .route("/:itemId/delete")
+    .get(controller.getItemDelete)
+    .post(controller.postItemDelete);
 
 export default router;
