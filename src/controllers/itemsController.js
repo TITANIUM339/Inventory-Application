@@ -1,4 +1,5 @@
 import {
+    deleteItem,
     getCategory,
     getItem,
     getItems,
@@ -107,7 +108,7 @@ export default {
             if (!result.isEmpty()) {
                 const errors = result.array();
 
-                res.render("pages/itemForm", {
+                res.status(400).render("pages/itemForm", {
                     title: "Edit item - Inventory Application",
                     heading: "Edit item",
                     action: `items/${itemId}/edit`,
@@ -154,7 +155,7 @@ export default {
                 heading: `Delete ${name}`,
                 action: `items/${itemId}/delete`,
                 errors: null,
-            });   
+            });
         } catch (error) {
             console.error(error);
             next(
@@ -166,4 +167,41 @@ export default {
             );
         }
     },
+    postItemDelete: [
+        passwordValidationChian(),
+        async (req, res, next) => {
+            const result = validationResult(req);
+            const { itemId } = matchedData(req);
+
+            try {
+                const { name, category_id } = await gi(itemId);
+
+                if (!result.isEmpty()) {
+                    const errors = result.array();
+
+                    res.status(400).render("pages/delete", {
+                        title: "Delete item - Inventory Application",
+                        heading: `Delete ${name}`,
+                        action: `items/${itemId}/delete`,
+                        errors,
+                    });
+
+                    return;
+                }
+
+                await deleteItem(itemId);
+
+                res.redirect(`/categories/${category_id}`);
+            } catch (error) {
+                console.error(error);
+                next(
+                    new customError(
+                        "Internal Server Error",
+                        "Something unexpected has occurred. Try reloading the page.",
+                        500,
+                    ),
+                );
+            }
+        },
+    ],
 };
